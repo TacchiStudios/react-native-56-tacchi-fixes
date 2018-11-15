@@ -151,8 +151,13 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+
 /* How to access the PC from a struct ucontext */
-#undef PC_FROM_UCONTEXT
+#if defined(__arm__) || defined(__arm64__)
+#define PC_FROM_UCONTEXT uc_mcontext->__ss.__pc
+#else
+#define PC_FROM_UCONTEXT uc_mcontext->__ss.__rip
+#endif
 
 /* Define to necessary symbol if this constant uses a non-standard name on
    your system. */
